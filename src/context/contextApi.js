@@ -8,6 +8,7 @@ export const AppContext = (props) => {
     const [searchResults, setSearchResults] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("New");
     const [mobileMenu, setMobileMenu] = useState(false);
+    const [subList,setsubList] = useState([]);
 
     useEffect(() => {
         fetchSelectedCategoryData(selectedCategory);
@@ -16,7 +17,6 @@ export const AppContext = (props) => {
     const fetchSelectedCategoryData = (query) => {
         setLoading(true);
         fetchDataFromApi(`search/?q=${query}`).then(({ contents }) => {
-            console.log(contents);
             setSearchResults(contents);
             setLoading(false);
         });
@@ -32,6 +32,8 @@ export const AppContext = (props) => {
                 setSelectedCategory,
                 mobileMenu,
                 setMobileMenu,
+                setsubList,
+                subList,
             }}
         >
             {props.children}

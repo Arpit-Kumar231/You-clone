@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import ReactPlayer from "react-player/youtube";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { AiOutlineLike } from "react-icons/ai";
+import { FiBell } from "react-icons/fi";
 import { abbreviateNumber } from "js-abbreviation-number";
 
 import { fetchDataFromApi } from "../utils/api";
@@ -13,7 +14,10 @@ const VideoDetails = () => {
     const [video, setVideo] = useState();
     const [relatedVideos, setRelatedVideos] = useState();
     const { id } = useParams();
-    const { setLoading } = useContext(Context);
+    const { setLoading , setsubList , subList} = useContext(Context);
+    const [subscribed,setsubscribed] = useState(false);
+    
+
 
     useEffect(() => {
         document.getElementById("root").classList.add("custom-h");
@@ -76,6 +80,11 @@ const VideoDetails = () => {
                                 </div>
                                 <div className="text-white/[0.7] text-sm">
                                     {video?.author?.stats?.subscribersText}
+                                </div>
+                                <div className={subscribed ? "flex items-center justify-center h-11 px-6 mr-7 my-5 rounded-3xl bg-white/[0.15]":"flex items-center justify-center h-11 px-6 my-5 rounded-3xl bg-red-700"} onClick={() => {setsubscribed(!subscribed);
+                                setsubList([...subList,{title:video.author.title , src:video.author.avatar[0].url,auth:video?.author?.badges[0]?.type}]); console.log(subList)}}>
+                                <FiBell className="text-white mr-2 text-xl cursor-pointer" />
+                                {subscribed ? "Subscribed" : "Subscribe"}
                                 </div>
                             </div>
                         </div>
